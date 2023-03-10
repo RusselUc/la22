@@ -41,6 +41,8 @@ const App = () => {
           <Route path="/gastos-carnes" element={<BillsC />} />
           <Route path="/carnes" element={<Carnes />} />
           <Route path="/caja-carnes" element={<SaledC />} />
+
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </MicheladaProvider>
