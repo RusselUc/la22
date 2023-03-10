@@ -21,8 +21,10 @@ const App = () => {
     } else {
       if(currentUser.displayName === "Miches"){
         return <Home/>;
-      }else{
+      }else if(currentUser.displayName === "Carnes"){
         return <HomeC/>;
+      } else {
+        return <Login/>
       }
     }
   };
