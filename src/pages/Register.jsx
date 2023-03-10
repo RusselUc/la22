@@ -1,20 +1,25 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/logo.png";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
-const Login = () => {
+const Register = () => {
   const [user, setUser] = useState("")
   const [pass, setPass] = useState("")
-  const navigate = useNavigate()
+  const [rol, setRol] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const a = await signInWithEmailAndPassword(auth, user, pass);
-      navigate("/");
+      const res = await createUserWithEmailAndPassword(auth, user, pass);
+      await updateProfile(res.user, {
+        displayName:rol
+      });
+
+      console.log(res)
+      // navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -27,6 +32,12 @@ const Login = () => {
     <div className="flex h-screen flex-col items-center justify-center bg-[#f6f7ff]">
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-10 rounded-xl bg-white py-10 px-5">
         <img className="h-40 w-40 object-cover" src={logo} alt="" />
+        <input
+          className="rounded-lg border bg-[#f6f7ff] p-3 text-lg outline-none"
+          type="text"
+          placeholder="Rol (Carnes / Miches)"
+          onChange={(e) => setRol(e.target.value)}
+        />
         <input
           className="rounded-lg border bg-[#f6f7ff] p-3 text-lg outline-none"
           type="text"
@@ -53,4 +64,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

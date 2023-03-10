@@ -14,14 +14,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-const Bills = () => {
+const BillsC = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
 
   const navigate = useNavigate();
 
-  const { addNewBill, setAllAmount } = useContext(MicheladaContext);
+  const { addNewBillMeat, setAllAmountMeat } = useContext(MicheladaContext);
 
   const [data, setData] = useState([]);
 
@@ -42,7 +42,7 @@ const Bills = () => {
 
   const handle = async (e) => {
     e.preventDefault();
-    await addNewBill(name, amount);
+    await addNewBillMeat(name, amount);
     setOpen(false);
   };
 
@@ -51,7 +51,7 @@ const Bills = () => {
   };
 
   useEffect(() => {
-    const q = query(collection(db, "gastos"));
+    const q = query(collection(db, "gastosCarnes"));
     const getChats = () => {
       const unsub = onSnapshot(q, (querySnapshot) => {
         const cities = [];
@@ -65,7 +65,7 @@ const Bills = () => {
             amount = amount + doc.data().amount;
           }
         });
-        setAllAmount(amount);
+        setAllAmountMeat(amount);
         cities.push({ name: "Total", amount: amount });
         setData(cities);
       });
@@ -128,4 +128,4 @@ const Bills = () => {
   );
 };
 
-export default Bills;
+export default BillsC;

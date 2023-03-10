@@ -4,40 +4,26 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { MicheladaContext } from "../context/MicheladaProvider";
 
-const ContentMiche = ({ product, setOpen }) => {
+const ContentMeat = ({ product, setOpen }) => {
   const [addAmount, setAddAmount] = useState(0);
-  const { dayId, lastProduct } = useContext(MicheladaContext);
+  const { dayIdMeat, lastMeat } = useContext(MicheladaContext);
+  console.log(dayIdMeat)
   const updateItem = async () => {
-    const itemRef = doc(db, "productos", dayId);
-    if (product.name === "Fresa") {
+    const itemRef = doc(db, "carnes", dayIdMeat);
+    if (product.name === "Platillo") {
       await updateDoc(itemRef, {
-        ...lastProduct,
-        fresa: lastProduct.fresa + addAmount,
+        ...lastMeat,
+        platillo: lastMeat.platillo + addAmount,
       });
-    } else if (product.name === "Tamarindo") {
+    } else if (product.name === "Media") {
       await updateDoc(itemRef, {
-        ...lastProduct,
-        tamarindo: lastProduct.tamarindo + addAmount,
+        ...lastMeat,
+        media: lastMeat.media + addAmount,
       });
-    } else if (product.name === "Piña") {
+    } else if (product.name === "Kilo") {
       await updateDoc(itemRef, {
-        ...lastProduct,
-        pina: lastProduct.pina + addAmount,
-      });
-    } else if (product.name === "Mango") {
-      await updateDoc(itemRef, {
-        ...lastProduct,
-        mango: lastProduct.mango + addAmount,
-      });
-    } else if (product.name === "Clamato") {
-      await updateDoc(itemRef, {
-        ...lastProduct,
-        clamato: lastProduct.clamato + addAmount,
-      });
-    } else if (product.name === "Clasica") {
-      await updateDoc(itemRef, {
-        ...lastProduct,
-        clasica: lastProduct.clasica + addAmount,
+        ...lastMeat,
+        kilo: lastMeat.kilo + addAmount,
       });
     }
 
@@ -79,12 +65,6 @@ const ContentMiche = ({ product, setOpen }) => {
         </div>
       </div>
       <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-        {/* <button
-                    type="button"
-                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                  >
-                    Deactivate
-                  </button> */}
         <button
           onClick={() => updateItem()}
           disabled={!isValid()}
@@ -100,4 +80,4 @@ const ContentMiche = ({ product, setOpen }) => {
   );
 };
 
-export default ContentMiche;
+export default ContentMeat;

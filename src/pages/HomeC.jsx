@@ -1,19 +1,17 @@
 import React, { useContext, useState } from "react";
-import miches from "../assets/img/miche.png";
+import carne from "../assets/img/carne-asada.png";
 import caja from "../assets/img/cajero-automatico.png";
 import gastos from "../assets/img/gastos.png";
 import { useNavigate } from "react-router-dom";
 import { MicheladaContext } from "../context/MicheladaProvider";
 import Modal from "../components/Modal";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
-const Home = () => {
+const HomeC = () => {
   const navigate = useNavigate();
-  const { lastProduct, addProduct } = useContext(MicheladaContext);
+  const { lastMeat, addProductMeat } = useContext(MicheladaContext);
   const [open, setOpen] = useState(false);
 
   const newDay = async () => {
-    await addProduct()
+    await addProductMeat()
     setOpen(false)
   }
   return (
@@ -22,12 +20,12 @@ const Home = () => {
         <h2 className="my-5 text-4xl font-light text-white">Menú</h2>
         <label
           className={`flex h-8  w-20  items-center justify-center rounded-full text-white ${
-            lastProduct.dayOpen ? "bg-green-300" : "bg-[#ff5f93]"
+            lastMeat.dayOpen ? "bg-green-300" : "bg-[#ff5f93]"
           }`}
         >
-          {lastProduct.dayOpen ? "Abierto" : "Cerrado"}
+          {lastMeat.dayOpen ? "Abierto" : "Cerrado"}
         </label>
-        {!lastProduct.dayOpen && (
+        {!lastMeat.dayOpen && (
           <button
             className="rounded-lg bg-[#3cd49f] p-2 text-white"
             onClick={() => setOpen(true)}
@@ -36,20 +34,20 @@ const Home = () => {
           </button>
         )}
       </span>
-      {lastProduct.dayOpen ? (
-        <div className="flex flex-wrap items-center justify-around gap-10 p-5">
+      {lastMeat.dayOpen ? (
+        <div className="flex flex-wrap justify-around gap-10 p-5 items-center">
           <div
-            onClick={() => navigate("/micheladas")}
+            onClick={() => navigate("/carnes")}
             className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3"
           >
-            <img src={miches} className="h-14 w-14" />
-            <span>Micheladas</span>
+            <img src={carne} className="h-14 w-14" />
+            <span>Carnes</span>
           </div>
-          <div onClick={() => navigate("/caja")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
+          <div onClick={() => navigate("/caja-carnes")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
             <img src={caja} className="h-14 w-14" />
             <span>Caja</span>
           </div>
-          <div onClick={() => navigate("/gastos")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
+          <div onClick={() => navigate("/gastos-carnes")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
             <img src={gastos} className="h-14 w-14" />
             <span>Gastos</span>
           </div>
@@ -77,4 +75,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeC;

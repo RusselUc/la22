@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { MicheladaContext } from "../context/MicheladaProvider";
 import DataTable from 'react-data-table-component';
 
-const Saled = () => {
+const SaledC = () => {
     const navigate = useNavigate()
-    const { lastProduct, saled, closeDay, allAmount } = useContext(MicheladaContext)
+    const { lastMeat, saled, closeDayMeat, allAmountMeat } = useContext(MicheladaContext)
 
     const columns = [
         {
             name: 'Michelada',
-            selector: row => row.michelada,
+            selector: row => row.carne,
         },
         {
             name: 'Cantidad',
@@ -22,43 +22,33 @@ const Saled = () => {
     const data = [
         {
             id: 1,
-            michelada:'Fresa',
-            cantidad:lastProduct.fresa,
+            carne:'Platillo',
+            cantidad:lastMeat.platillo,
         },
         {
             id: 2,
-            michelada: "Piña",
-            cantidad: lastProduct.pina,
+            carne: "Media",
+            cantidad: lastMeat.media,
         },
         {
             id: 3,
-            michelada: "Tamarindo",
-            cantidad: lastProduct.tamarindo,
+            carne: "Kilo",
+            cantidad: lastMeat.kilo,
         },
         {
             id: 4,
-            michelada: "Mango",
-            cantidad: lastProduct.mango,
+            carne: "Libre",
+            cantidad: lastMeat.libre,
         },
         {
             id: 5,
-            michelada: "Clamato",
-            cantidad: lastProduct.clamato,
+            carne: "Total",
+            cantidad: (lastMeat.platillo * 70) + (lastMeat.platillo * 140) + (lastMeat.kilo * 280) + (lastMeat.libre),
         },
         {
             id: 6,
-            michelada: "Clasica",
-            cantidad: lastProduct.clasica,
-        },
-        {
-            id: 7,
-            michelada: "Total",
-            cantidad: ((saled() - lastProduct.clasica) * 40) + (lastProduct.clasica * 45),
-        },
-        {
-            id: 8,
-            michelada: "Total - gastos",
-            cantidad: ((saled() - lastProduct.clasica) * 40) + (lastProduct.clasica * 45) - allAmount,
+            carne: "Total - gastos",
+            cantidad: ((lastMeat.platillo * 70) + (lastMeat.platillo * 140) + (lastMeat.kilo * 280) + (lastMeat.libre)) - allAmountMeat,
         },
     ]
   return (
@@ -70,9 +60,9 @@ const Saled = () => {
         <h2 className="my-5 text-4xl font-light text-white text-center w-1/2">Caja</h2>
       </span>
       <DataTable className="p-5" columns={columns} data={data}/>
-      <button onClick={() => closeDay()} className="bg-[#ff5f93] mx-10 py-2 rounded-xl text-white">Cerrar día</button>
+      <button onClick={() => closeDayMeat()} className="bg-[#ff5f93] mx-10 py-2 rounded-xl text-white">Cerrar día</button>
     </div>
   );
 };
 
-export default Saled;
+export default SaledC;
