@@ -5,6 +5,8 @@ import gastos from "../assets/img/gastos.png";
 import { useNavigate } from "react-router-dom";
 import { MicheladaContext } from "../context/MicheladaProvider";
 import Modal from "../components/Modal";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 const HomeC = () => {
   const navigate = useNavigate();
   const { lastMeat, addProductMeat } = useContext(MicheladaContext);
