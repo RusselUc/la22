@@ -43,7 +43,7 @@ const SaledC = () => {
         {
             id: 5,
             carne: "Total",
-            cantidad: (lastMeat.platillo * 70) + (lastMeat.media * 140) + (lastMeat.kilo * 280) + (lastMeat.libre),
+            cantidad: (lastMeat.platillo * 70) + (lastMeat.media * 140) + (lastMeat.kilo * 280) + (lastMeat.libre) + (lastMeat.initialSaled),
         },
         {
             id: 6,

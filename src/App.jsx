@@ -45,6 +45,7 @@ const App = () => {
           <Route path="/caja-carnes" element={<SaledC />} />
 
           <Route path="/register" element={<Register />} />
+          <Route path="/cliente" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </MicheladaProvider>

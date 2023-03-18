@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import miches from "../assets/img/miche.png";
 import caja from "../assets/img/cajero-automatico.png";
 import gastos from "../assets/img/gastos.png";
+import portapapeles from "../assets/img/portapapeles.png";
 import { useNavigate } from "react-router-dom";
 import { MicheladaContext } from "../context/MicheladaProvider";
 import Modal from "../components/Modal";
@@ -11,9 +12,11 @@ const Home = () => {
   const navigate = useNavigate();
   const { lastProduct, addProduct } = useContext(MicheladaContext);
   const [open, setOpen] = useState(false);
+  const [initialSaled, setInitialSaled] = useState(0);
+  const [initialGlass, setInitialGlass] = useState(0);
 
-  const newDay = async () => {
-    await addProduct()
+  const newDay = async (initialSaledm, initialGlass) => {
+    await addProduct(initialSaled, initialGlass)
     setOpen(false)
   }
   return (
@@ -45,6 +48,10 @@ const Home = () => {
             <img src={miches} className="h-14 w-14" />
             <span>Micheladas</span>
           </div>
+          <div className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
+            <img src={portapapeles} className="h-14 w-14" />
+            <span>Pendientes</span>
+          </div>
           <div onClick={() => navigate("/caja")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
             <img src={caja} className="h-14 w-14" />
             <span>Caja</span>
@@ -53,6 +60,7 @@ const Home = () => {
             <img src={gastos} className="h-14 w-14" />
             <span>Gastos</span>
           </div>
+
           <button className="bg-[#ff5f93] text-white h-10 p-2 rounded-lg " onClick={() => signOut(auth)}>Cerrar sesión</button>
         </div>
       ) : (
@@ -64,9 +72,23 @@ const Home = () => {
         <Modal setOpen={setOpen}>
           <div className="flex w-full flex-col p-10">
             <h1 className="text-lg font-bold">¿Abrir nuevo día?</h1>
+            <p>Ingrese la cantidad de efectivo con el que inicia la caja: </p>
+            <input
+              className="rounded-lg border bg-[#f6f7ff] p-3 text-lg outline-none"
+              type="number"
+              placeholder="$ 0.00"
+              onChange={(e) => setInitialSaled(Number(e.target.value))}
+            />
+            <p>Vasos iniciales: </p>
+            <input
+              className="rounded-lg border bg-[#f6f7ff] p-3 text-lg outline-none"
+              type="number"
+              placeholder="0"
+              onChange={(e) => setInitialGlass(Number(e.target.value))}
+            />
             <button
               className="mt-5 flex w-full items-end justify-center rounded-md bg-[#506eff] text-white"
-              onClick={() => newDay()}
+              onClick={() => newDay(initialSaled, initialGlass)}
             >
               Aceptar
             </button>

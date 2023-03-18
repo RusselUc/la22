@@ -22,7 +22,7 @@ const MicheladaProvider = ({ children }) => {
   const [dayIdMeat, setDayIdMeat] = useState("");
   const [allAmount, setAllAmount] = useState(0);
   const [allAmountMeat, setAllAmountMeat] = useState(0);
-  const addProduct = async () => {
+  const addProduct = async (initialSaled, initialGlass) => {
     const docRef = await addDoc(collection(db, "productos"), {
       fresa: 0,
       pina: 0,
@@ -31,17 +31,20 @@ const MicheladaProvider = ({ children }) => {
       tamarindo: 0,
       clamato: 0,
       dayOpen: true,
+      initialSaled,
+      initialGlass,
       date: serverTimestamp(),
     });
   };
 
-  const addProductMeat = async () => {
+  const addProductMeat = async (initialSaled) => {
     const docRef = await addDoc(collection(db, "carnes"), {
       platillo: 0,
       media: 0,
       kilo: 0,
       libre: 0,
       dayOpen: true,
+      initialSaled,
       date: serverTimestamp(),
     });
   };
@@ -71,7 +74,7 @@ const MicheladaProvider = ({ children }) => {
   };
 
   const closeDayMeat = async () => {
-    const itemRef = doc(db, "carnes", dayId);
+    const itemRef = doc(db, "carnes", dayIdMeat);
     await updateDoc(itemRef, {
       ...lastMeat,
       dayOpen: !lastMeat.dayOpen,
@@ -81,7 +84,7 @@ const MicheladaProvider = ({ children }) => {
   const saled = () => {
     let sal = 0;
     for (let clave in lastProduct) {
-      if (clave !== "dayOpen" && clave !== "date") {
+      if (clave !== "dayOpen" && clave !== "date" && clave !== "initialSaled" && clave !== "initialGlass") {
         sal = sal + lastProduct[clave];
       }
     }

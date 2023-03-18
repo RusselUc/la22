@@ -58,6 +58,10 @@ const Miches = () => {
         </div>
         <h2 className="my-5 text-4xl font-light text-white text-center w-1/2">Micheladas</h2>
       </span>
+      <div className="flex justify-around">
+        <div className="text-center text-xl">Vendidos: {saled()}</div>
+        <div className="text-center text-xl">Vasos restantes: {lastProduct.initialGlass - saled()}</div>
+      </div>
       <div className="flex flex-wrap justify-around gap-10 p-5">
         {products.map((product) => (
           <ItemProduct
@@ -69,7 +73,6 @@ const Miches = () => {
         ))}
       </div>
 
-      <div className="text-center text-2xl">Vendidos: {saled()}</div>
       {open && <Modal setOpen={setOpen}>
         <ContentMiche product={item} setOpen={setOpen}/>
         </Modal>}

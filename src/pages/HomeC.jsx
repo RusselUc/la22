@@ -11,11 +11,12 @@ const HomeC = () => {
   const navigate = useNavigate();
   const { lastMeat, addProductMeat } = useContext(MicheladaContext);
   const [open, setOpen] = useState(false);
+  const [initialSaled, setInitialSaled] = useState(0);
 
-  const newDay = async () => {
-    await addProductMeat()
-    setOpen(false)
-  }
+  const newDay = async (initialSaled) => {
+    await addProductMeat(initialSaled);
+    setOpen(false);
+  };
   return (
     <div className="flex h-screen flex-col gap-10 bg-[#f6f7ff]">
       <span className="flex items-center justify-around bg-[#526dff]">
@@ -37,7 +38,7 @@ const HomeC = () => {
         )}
       </span>
       {lastMeat.dayOpen ? (
-        <div className="flex flex-wrap justify-around gap-10 p-5 items-center">
+        <div className="flex flex-wrap items-center justify-around gap-10 p-5">
           <div
             onClick={() => navigate("/carnes")}
             className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3"
@@ -45,15 +46,26 @@ const HomeC = () => {
             <img src={carne} className="h-14 w-14" />
             <span>Carnes</span>
           </div>
-          <div onClick={() => navigate("/caja-carnes")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
+          <div
+            onClick={() => navigate("/caja-carnes")}
+            className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3"
+          >
             <img src={caja} className="h-14 w-14" />
             <span>Caja</span>
           </div>
-          <div onClick={() => navigate("/gastos-carnes")} className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3">
+          <div
+            onClick={() => navigate("/gastos-carnes")}
+            className="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-3"
+          >
             <img src={gastos} className="h-14 w-14" />
             <span>Gastos</span>
           </div>
-          <button className="bg-[#ff5f93] text-white h-10 p-2 rounded-lg " onClick={() => signOut(auth)}>Cerrar sesión</button>
+          <button
+            className="h-10 rounded-lg bg-[#ff5f93] p-2 text-white "
+            onClick={() => signOut(auth)}
+          >
+            Cerrar sesión
+          </button>
         </div>
       ) : (
         <p className="flex h-full items-center justify-center text-xl">
@@ -64,9 +76,16 @@ const HomeC = () => {
         <Modal setOpen={setOpen}>
           <div className="flex w-full flex-col p-10">
             <h1 className="text-lg font-bold">¿Abrir nuevo día?</h1>
+            <p>Ingrese la cantidad de efectivo con el que inicia la caja: </p>
+            <input
+              className="rounded-lg border bg-[#f6f7ff] p-3 text-lg outline-none"
+              type="number"
+              placeholder="$ 0.00"
+              onChange={(e) => setInitialSaled(Number(e.target.value))}
+            />
             <button
               className="mt-5 flex w-full items-end justify-center rounded-md bg-[#506eff] text-white"
-              onClick={() => newDay()}
+              onClick={() => newDay(initialSaled)}
             >
               Aceptar
             </button>
