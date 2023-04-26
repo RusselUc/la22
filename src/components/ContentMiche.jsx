@@ -3,11 +3,13 @@ import { UilPlus } from "@iconscout/react-unicons";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { MicheladaContext } from "../context/MicheladaProvider";
+import Loading from "./Loading";
 
-const ContentMiche = ({ product, setOpen }) => {
+const ContentMiche = ({ product, setOpen, setLoad }) => {
   const [addAmount, setAddAmount] = useState(0);
   const { dayId, lastProduct } = useContext(MicheladaContext);
   const updateItem = async () => {
+    setLoad(true)
     const itemRef = doc(db, "productos", dayId);
     if (product.name === "Fresa") {
       await updateDoc(itemRef, {
@@ -42,6 +44,7 @@ const ContentMiche = ({ product, setOpen }) => {
     }
 
     setOpen(false);
+    setLoad(false)
   };
 
   const isValid = () => {

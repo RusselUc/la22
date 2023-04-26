@@ -12,6 +12,7 @@ import Miches from "./pages/Miches";
 import Register from "./pages/Register";
 import Saled from "./pages/Saled";
 import SaledC from "./pages/SaledC";
+import Pendientes from "./pages/Pendientes";
 
 const App = () => {
   const {currentUser} = useContext(AuthContext)
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/micheladas" element={<Miches />} />
           <Route path="/caja" element={<Saled />} />
           <Route path="/gastos" element={<Bills />} />
+          <Route path="/pendientes" element={<Pendientes />} />
 
           <Route path="/gastos-carnes" element={<BillsC />} />
           <Route path="/carnes" element={<Carnes />} />

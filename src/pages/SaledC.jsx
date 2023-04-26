@@ -51,6 +51,10 @@ const SaledC = () => {
             cantidad: ((lastMeat.platillo * 70) + (lastMeat.media * 140) + (lastMeat.kilo * 280) + (lastMeat.libre)) - allAmountMeat,
         },
     ]
+    const toHome = () => {
+        closeDayMeat()
+        navigate("/")
+    }
   return (
     <div className="flex h-screen flex-col gap-10 bg-[#f6f7ff]">
       <span className="flex items-center bg-[#526dff]">
@@ -60,7 +64,7 @@ const SaledC = () => {
         <h2 className="my-5 text-4xl font-light text-white text-center w-1/2">Caja</h2>
       </span>
       <DataTable className="p-5" columns={columns} data={data}/>
-      <button onClick={() => closeDayMeat()} className="bg-[#ff5f93] mx-10 py-2 rounded-xl text-white">Cerrar día</button>
+      <button onClick={() => toHome()} className="bg-[#ff5f93] mx-10 py-2 rounded-xl text-white">Cerrar día</button>
     </div>
   );
 };

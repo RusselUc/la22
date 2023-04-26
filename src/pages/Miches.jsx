@@ -13,21 +13,26 @@ import ContentMiche from "../components/ContentMiche";
 import { MicheladaContext } from "../context/MicheladaProvider";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import Loading from "../components/Loading";
 
 const Miches = () => {
   const [open, setOpen] = useState(false);
   const [openGlass, setOpenGlass] = useState(false);
+  const [load, setLoad] = useState(false);
   const [glass, setGlass] = useState(0);
   const [item, setItem] = useState(null);
   const { dayId, lastProduct, saled } = useContext(MicheladaContext);
 
   const updateItem = async () => {
+    await setLoad(true)
     const itemRef = doc(db, "productos", dayId);
-      await updateDoc(itemRef, {
-        ...lastProduct,
-        initialGlass: lastProduct.initialGlass + glass,
-      });
-    }
+    await updateDoc(itemRef, {
+      ...lastProduct,
+      initialGlass: lastProduct.initialGlass + glass,
+    });
+    setOpenGlass(!openGlass);
+    await setLoad(false)
+  };
   const navigate = useNavigate();
   const products = [
     {
@@ -63,14 +68,17 @@ const Miches = () => {
   };
   return (
     <div className="flex h-screen flex-col gap-10 bg-[#f6f7ff]">
-      <span className="flex items-center justify-around bg-[#526dff]">
+      <span className="flex items-center justify-between bg-[#526dff] px-1">
         <div className="cursor-pointer px-4" onClick={() => navigate("/")}>
           <UilArrowLeft className="h-10 w-10 text-white" />
         </div>
         <h2 className="my-5 text-center text-4xl font-light text-white">
           Micheladas
         </h2>
-        <button className="rounded-lg bg-[#3cd49f] p-1 font-semibold" onClick={() => setOpenGlass(true)}>
+        <button
+          className="rounded-lg bg-[#3cd49f] p-1"
+          onClick={() => setOpenGlass(true)}
+        >
           Agregar vasos
         </button>
       </span>
@@ -93,7 +101,7 @@ const Miches = () => {
 
       {open && (
         <Modal setOpen={setOpen}>
-          <ContentMiche product={item} setOpen={setOpen} />
+          <ContentMiche product={item} setOpen={setOpen} setLoad={setLoad}/>
         </Modal>
       )}
 
@@ -115,6 +123,10 @@ const Miches = () => {
             </button>
           </div>
         </Modal>
+      )}
+
+      {load && (
+        <Loading/>
       )}
     </div>
   );
