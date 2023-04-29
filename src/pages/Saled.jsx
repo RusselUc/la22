@@ -63,7 +63,7 @@ const Saled = () => {
       michelada: "Total + saldo inicial",
       cantidad:
         (saled() - lastProduct.clasica) * 40 +
-        lastProduct.clasica * 45 +
+        lastProduct.clasica * 40 +
         lastProduct.initialSaled,
     },
     {
