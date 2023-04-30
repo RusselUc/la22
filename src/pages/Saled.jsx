@@ -71,7 +71,7 @@ const Saled = () => {
       michelada: "Total - gastos",
       cantidad:
         (saled() - lastProduct.clasica) * 40 +
-        lastProduct.clasica * 45 +
+        lastProduct.clasica * 40 +
         lastProduct.initialSaled -
         allAmount,
     },
